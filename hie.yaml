@@ -1,0 +1,7 @@
+cradle:
+  stack:
+    - path: "././"
+      component: "headered-csv:lib"
+
+    - path: "./tests"
+      component: "headered-csv:test:tests"

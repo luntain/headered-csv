@@ -1,0 +1,48 @@
+name:                headered-csv
+version:             0.1.0
+#synopsis:
+#description:
+homepage:            https://github.com/luntain/headered-csv#readme
+license:             BSD3
+author:              Kamil Dworakowski
+maintainer:          kamil@dworakowski.name
+copyright:           2021 Kamil Dworakowski
+category:            Text
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+  - vector
+  - bytestring
+  - text
+  - error-or
+  - conduit
+  - exceptions
+  - cassava
+
+default-extensions:
+    TypeApplications,
+    NamedFieldPuns, LambdaCase, MultiWayIf,
+    DeriveDataTypeable, GeneralizedNewtypeDeriving, DeriveGeneric,
+    FunctionalDependencies, FlexibleContexts, ScopedTypeVariables
+
+ghc-options:         -Wall -fno-warn-deprecated-flags -fno-warn-name-shadowing -fno-warn-missing-signatures -fno-warn-orphans -Werror
+
+library:
+  source-dirs:  .
+  exposed-modules:
+  - Text.Csv.Headered.Parser
+  - Text.Csv.Headered.Conduit
+
+
+tests:
+  tests:
+    source-dirs:      tests
+    main:             Tests.hs
+    dependencies:
+    - headered-csv
+    - tasty
+    - interpolatedstring-perl6
+    ghc-options:
+      - -threaded -rtsopts

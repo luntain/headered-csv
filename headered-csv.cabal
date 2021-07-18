@@ -1,0 +1,64 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           headered-csv
+version:        0.1.0
+category:       Text
+homepage:       https://github.com/luntain/headered-csv#readme
+author:         Kamil Dworakowski
+maintainer:     kamil@dworakowski.name
+copyright:      2021 Kamil Dworakowski
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Text.Csv.Headered.Parser
+      Text.Csv.Headered.Conduit
+  other-modules:
+      Paths_headered_csv
+  hs-source-dirs:
+      ./
+  default-extensions:
+      TypeApplications, NamedFieldPuns, LambdaCase, MultiWayIf, DeriveDataTypeable, GeneralizedNewtypeDeriving, DeriveGeneric, FunctionalDependencies, FlexibleContexts, ScopedTypeVariables
+  ghc-options: -Wall -fno-warn-deprecated-flags -fno-warn-name-shadowing -fno-warn-missing-signatures -fno-warn-orphans -Werror
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , cassava
+    , conduit
+    , error-or
+    , exceptions
+    , text
+    , vector
+  default-language: Haskell2010
+
+test-suite tests
+  type: exitcode-stdio-1.0
+  main-is: Tests.hs
+  other-modules:
+      Paths_headered_csv
+  hs-source-dirs:
+      tests
+  default-extensions:
+      TypeApplications, NamedFieldPuns, LambdaCase, MultiWayIf, DeriveDataTypeable, GeneralizedNewtypeDeriving, DeriveGeneric, FunctionalDependencies, FlexibleContexts, ScopedTypeVariables
+  ghc-options: -Wall -fno-warn-deprecated-flags -fno-warn-name-shadowing -fno-warn-missing-signatures -fno-warn-orphans -Werror -threaded -rtsopts
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , cassava
+    , conduit
+    , error-or
+    , exceptions
+    , headered-csv
+    , interpolatedstring-perl6
+    , tasty
+    , text
+    , vector
+  default-language: Haskell2010
