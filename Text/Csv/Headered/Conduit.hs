@@ -25,18 +25,21 @@ simpleCsv rp = do
       case parseProgress of
         Fail _unparsedPortion err ->
           throwM $ InvalidCsv pos err
-        Done (Left err:_) -> throwM (ErrTag "Invalid header row" $ ErrMessage (T.pack err))
+        Done [] -> throwM (PrettyErrAcc $ ErrMessage "Empty input")
+        Done (Left err:_) -> throwM (PrettyErrAcc $ ErrTag "Invalid header row" $ ErrMessage (T.pack err))
         Done (Right header:rest) ->
-          case parseHeader header of
-            Error err -> throwM (ErrTag "Csv header error" err)
+          case parseHeader rp header of
+            Error err -> throwM (PrettyErrAcc $ ErrTag "Csv header error" err)
             OK parse -> go parse (succ pos) (Done rest)
         Many [] continueParsingCsv -> do
           mchunk <- await
           let newParseProgress = continueParsingCsv (fromMaybe B.empty mchunk)
           goHeader pos newParseProgress
-        Many (header:rest) continueParsingCsv ->
-          case parseHeader header of
-            Error err -> throwM (ErrTag "Csv header error" err)
+        Many (Left err:_) _continueParsing ->
+          throwM (PrettyErrAcc $ ErrMessage (T.pack err))
+        Many (Right header:rest) continueParsingCsv ->
+          case parseHeader rp header of
+            Error err -> throwM (PrettyErrAcc $ ErrTag "Csv header error" err)
             OK parse -> go parse (succ pos) (Many rest continueParsingCsv)
     go parse pos parseProgress =
       case parseProgress of
@@ -45,21 +48,19 @@ simpleCsv rp = do
           _newPos <- emitRecords parse pos rawRecords
           return ()
         Many rawRecords continueParsingCsv -> do
-          newPos <- emitRecords pos parse rawRecords
+          newPos <- emitRecords parse pos rawRecords
           mchunk <- await
           go parse newPos (continueParsingCsv (fromMaybe B.empty mchunk))
 
     emitRecords :: RowParser a -> Int -> [Either String (V.Vector B.ByteString)] -> ConduitT i a m Int
     emitRecords _ pos [] = pure pos
-    emitRecords _ pos (Left err:rs) =
-      throwM (ErrTag ("Invalid csv at record " <> (T.pack $ show pos))
+    emitRecords _ pos (Left err:_rs) =
+      throwM (PrettyErrAcc $ ErrTag ("Invalid csv at record " <> (T.pack $ show pos))
                (ErrMessage (T.pack err)))
     emitRecords parse pos (Right r:rs) =
      case parse r of
-       Error err -> throwM (Tag ("Parse error at record " <> (fromString $ show (succ pos))) err)
+       Error err -> throwM (PrettyErrAcc $ ErrTag ("Parse error at record " <> (T.pack $ show (succ pos))) err)
        OK a -> yield a >> emitRecords parse (succ pos) rs
-
-
 
 
 data InvalidCsv = InvalidCsv Int String deriving (Show)

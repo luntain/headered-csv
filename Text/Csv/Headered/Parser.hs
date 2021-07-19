@@ -48,7 +48,7 @@ liftErrorOr res = RP (const (pure $ const res))
 stringField :: String -> RecordParser String
 stringField colTitle = RP $ \hdr ->
   case elemIndex (map toLower colTitle) (map (map toLower) hdr) of
-    Nothing -> fail (printf "No such column '%s' in %s" colTitle (show hdr))
+    Nothing -> fail (printf "No column '%s' in %s" colTitle (show hdr))
     Just i -> pure $ \r ->
       let len = V.length r
       in if i >= V.length r

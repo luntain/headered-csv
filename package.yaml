@@ -43,6 +43,7 @@ tests:
     dependencies:
     - headered-csv
     - tasty
+    - tasty-hunit
     - interpolatedstring-perl6
     ghc-options:
       - -threaded -rtsopts

@@ -42,6 +42,7 @@ packages:
 #
 extra-deps:
   - error-or-0.2.0.0
+  - interpolatedstring-perl6-1.0.2
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

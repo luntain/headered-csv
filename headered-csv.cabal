@@ -1,8 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
+--
+-- hash: 02b2d5782345468034be48ff321a8d8aa5af5b49486488d3c3867da04930b6fb
 
 name:           headered-csv
 version:        0.1.0
@@ -24,9 +26,8 @@ library
   other-modules:
       Paths_headered_csv
   hs-source-dirs:
-      ./
-  default-extensions:
-      TypeApplications, NamedFieldPuns, LambdaCase, MultiWayIf, DeriveDataTypeable, GeneralizedNewtypeDeriving, DeriveGeneric, FunctionalDependencies, FlexibleContexts, ScopedTypeVariables
+      ./.
+  default-extensions: TypeApplications, NamedFieldPuns, LambdaCase, MultiWayIf, DeriveDataTypeable, GeneralizedNewtypeDeriving, DeriveGeneric, FunctionalDependencies, FlexibleContexts, ScopedTypeVariables
   ghc-options: -Wall -fno-warn-deprecated-flags -fno-warn-name-shadowing -fno-warn-missing-signatures -fno-warn-orphans -Werror
   build-depends:
       base >=4.7 && <5
@@ -46,8 +47,7 @@ test-suite tests
       Paths_headered_csv
   hs-source-dirs:
       tests
-  default-extensions:
-      TypeApplications, NamedFieldPuns, LambdaCase, MultiWayIf, DeriveDataTypeable, GeneralizedNewtypeDeriving, DeriveGeneric, FunctionalDependencies, FlexibleContexts, ScopedTypeVariables
+  default-extensions: TypeApplications, NamedFieldPuns, LambdaCase, MultiWayIf, DeriveDataTypeable, GeneralizedNewtypeDeriving, DeriveGeneric, FunctionalDependencies, FlexibleContexts, ScopedTypeVariables
   ghc-options: -Wall -fno-warn-deprecated-flags -fno-warn-name-shadowing -fno-warn-missing-signatures -fno-warn-orphans -Werror -threaded -rtsopts
   build-depends:
       base >=4.7 && <5
@@ -59,6 +59,7 @@ test-suite tests
     , headered-csv
     , interpolatedstring-perl6
     , tasty
+    , tasty-hunit
     , text
     , vector
   default-language: Haskell2010
